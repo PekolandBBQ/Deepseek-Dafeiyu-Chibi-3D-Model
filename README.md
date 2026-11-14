@@ -4,13 +4,63 @@
 
 ## 资产图集
 
-[![黄昏时的小屋与篱下小院全景，左侧是小屋，右侧石径通往鱼池和枫树](previews/panoramas/cottage-at-dusk.webp)](previews/panoramas/cottage-at-dusk.webp)
+[360° 全景](#360-全景) · [小屋室内](#小屋室内) · [篱下小院](#篱下小院) · [大肥鱼的衣柜](#大肥鱼的衣柜) · [模型下载](https://github.com/PekolandBBQ/dafeiyu-cottage-3d/releases/tag/v1.0.0)
 
-| 小屋室内 | 篱下小院 |
+[![黄昏时的全景，篱灯沿院墙亮起，石径从篱门通往小屋](previews/panoramas/cottage-at-dusk.webp)](previews/panoramas/cottage-at-dusk.webp)
+
+从篱门往里看，左侧是小屋，右侧是鱼池和枫树下的餐桌。
+
+### 360° 全景
+
+两张图分别从屋内地毯旁和院中石径取景。原图均为 4096 × 2048 的等距柱状投影，可在支持这种格式的全景查看器中环视。
+
+**站在小屋里**
+
+[![屋内的球面展开图，从阅读椅、窗边书桌一直转到衣柜、床和壁炉](previews/panoramas/room-360.webp)](previews/panoramas/room-360.webp)
+
+**站在院中石径上**
+
+[![院内的球面展开图，可见小屋侧面、石池、枫树、篱门和花墙](previews/panoramas/garden-360.webp)](previews/panoramas/garden-360.webp)
+
+### 小屋室内
+
+[![小屋剖面全景，书架和窗边书桌位于左后方，衣柜毗邻床铺，前方摆有棋桌和相机](previews/interior/room-overview.webp)](previews/interior/room-overview.webp)
+
+| 窗边书桌 | 阅读角 |
 | --- | --- |
-| [![室内剖面全景，可见书桌、衣柜、床和阅读角](previews/interior/room-overview.webp)](previews/README.md#小屋室内) | [![庭院俯视，枫树、鱼池和小径都在篱笆内](previews/yard/overview.webp)](previews/README.md#篱下小院) |
+| [![窗台旁摊开的书、笔筒和木抽屉](previews/interior/window-desk.webp)](previews/interior/window-desk.webp) | [![木扶手椅、书架、落地灯和茶杯](previews/interior/reading-corner.webp)](previews/interior/reading-corner.webp) |
 
-[浏览完整图集](previews/README.md) · [屋内与院中 360° 全景](previews/README.md#360-全景) · [八套穿搭与布料特写](previews/README.md#大肥鱼的衣柜)
+| 衣柜穿衣镜 | 床头 |
+| --- | --- |
+| [![柜门上的穿衣镜里显示蓝鲸女仆默认穿搭](previews/interior/wardrobe-mirror.webp)](previews/interior/wardrobe-mirror.webp) | [![薄荷绿格纹床被、木床头和床头灯](previews/interior/bedside.webp)](previews/interior/bedside.webp) |
+
+### 篱下小院
+
+[![庭院俯视，池塘周围是宠物小窝、枫树、花篱和石板小路](previews/yard/overview.webp)](previews/yard/overview.webp)
+
+| 枫树下的餐桌 | 金鱼池 |
+| --- | --- |
+| [![树下铺着条纹桌布，桌上放着蒸笼、热汤面和饭菜](previews/yard/maple-table.webp)](previews/yard/maple-table.webp) | [![假山石洞旁的两尾金鱼与鹅卵石池沿](previews/yard/pond.webp)](previews/yard/pond.webp) |
+
+| 长椅旁的猫和狗 | 牵牛花篱门 |
+| --- | --- |
+| [![灰猫和棕犬站在木长椅前的草坪上](previews/yard/cat-and-dog.webp)](previews/yard/cat-and-dog.webp) | [![木篱门两侧的牵牛花和穿门而过的石板路](previews/yard/gate.webp)](previews/yard/gate.webp) |
+
+### 大肥鱼的衣柜
+
+[![八套穿搭的全身像：蓝鲸女仆、深蓝报刊装、夏日水手服、特别礼服、蓝白水手常服、海雾冬装、睡衣和鲸鱼伞雨衣](previews/wardrobe/outfits.webp)](previews/wardrobe/outfits.webp)
+
+**海风日记 · 夏日水手服**
+
+[![夏日装的斜前全身像、镂孔草帽边、鲸鱼挎包和双层裙摆](previews/wardrobe/summer-details.webp)](previews/wardrobe/summer-details.webp)
+
+**蓝鲸女仆**
+
+[![设定图与三维近景对照，可见腕带上方的蓬袖和袖口蕾丝的侧面轮廓](previews/maid-sleeves.webp)](previews/maid-sleeves.webp)
+
+**走动与收步**
+
+[![蓝鲸女仆走动、停步时，肩带和袖口蕾丝随动作摆动并回稳](previews/maid-walk.webp)](previews/maid-walk.webp)
 
 ## 本地预览
 
