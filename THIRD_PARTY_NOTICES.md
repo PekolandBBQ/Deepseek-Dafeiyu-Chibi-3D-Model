@@ -6,6 +6,8 @@
 
 八张衣柜设定图由项目维护者提供，涵盖默认女仆装及七套换装。本项目依照设定补做了各款的立体裁片、镶边、着装镜像和动作。v1.0.1 根据蓝鲸女仆设定重绘了胸襟、围裙镶边与裙摆刺绣。[可编辑的矢量母版](assets/maid-dress-uv.svg)
 
+v1.0.2 首页对照图左列使用维护者提供的蓝鲸女仆正面设定，另外两列是本项目的三维实拍。本版重新塑造了角色的颈部与上胸，制作了女仆翻领和立体缎带结，并为鳍耳和尾巴增加了随动作回弹的骨骼动画。[设定与模型对照](previews/wardrobe/maid-neck-comparison.webp)
+
 围裙中央使用 DeepSeek 官方发布的蓝色鲸鱼标志。该标志及其商标权归 DeepSeek 权利人所有，使用请参照单独的品牌规范。项目自己的角色、服装纹样与代码许可只涵盖各自对应的内容。[官方图标源文件](https://github.com/deepseek-ai/awesome-deepseek-integration/blob/172dc8b74a0d549f4bce9850f7fe6a25b37a5ac7/docs/_logo%20svg/ICON.svg) · [品牌素材使用规范](https://github.com/deepseek-ai/awesome-deepseek-integration/blob/main/docs/_logo%20svg/guidelines.md)
 
 动作与部分外观表面的采样参考 shenshen 桌宠 4.2.1，安装包登记的发布者为 merzlin。本地 4.2.1 的“待机呼吸休闲.webm”与上游同名文件的 Git blob 均为 fd64a428a2be1d3b4ff6cd7f9867dfe978ba0bbb。公开可核查的桌宠上游是 PC2005-cloud/dsh-pet。该项目区分程序代码与角色形象的授权。其程序的 MIT 版权声明为 Copyright (c) 2026 PC2005-cloud。[上游项目](https://github.com/PC2005-cloud/dsh-pet) · [MIT 原文](licenses/DSH-Pet-MIT.txt)

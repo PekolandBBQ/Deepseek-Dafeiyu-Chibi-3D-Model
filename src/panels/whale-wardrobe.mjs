@@ -111,24 +111,90 @@ export function fitWardrobe({model,body,head,knees,garment,lap,redraw}){
     overlay.morphTargetInfluences=garment.morphTargetInfluences;
     overlay.userData.followsSkirt=true;
   }
-  // Trace each strap up the actual bodice, over the shoulder and down the back.
-  // These upper rows are stationary in both of the skirt's hem morphs.
-  function apronStrap(parent,side){
-    const cloth=garment.geometry.attributes.position,uv=garment.geometry.attributes.uv;
-    let columns=1;
-    while(columns<uv.count && uv.getY(columns)===uv.getY(0))columns++;
-    const lastRow=cloth.count/columns-1;
-    function onDress(u,v){
-      const x=u*(columns-1),y=v*lastRow,i=Math.min(Math.floor(x),columns-2),j=Math.min(Math.floor(y),lastRow-1);
-      const corner=(row,col)=>new T.Vector3().fromBufferAttribute(cloth,row*columns+col);
-      return corner(j,i).lerp(corner(j,i+1),x-i)
-        .lerp(corner(j+1,i).lerp(corner(j+1,i+1),x-i),y-j);
+  // Upper fittings share the bodice UVs, including its shaped neck opening.
+  // These rows do not move in either hem morph.
+  const dressUV=garment.geometry.attributes.uv;
+  let columns=1;
+  while(columns<dressUV.count && dressUV.getY(columns)===dressUV.getY(0))columns++;
+  const lastRow=dressRest.count/columns-1;
+  function onDress(u,v){
+    const x=u*(columns-1),y=v*lastRow,i=Math.min(Math.floor(x),columns-2),j=Math.min(Math.floor(y),lastRow-1);
+    const corner=(row,col)=>new T.Vector3().fromBufferAttribute(dressRest,row*columns+col);
+    return corner(j,i).lerp(corner(j,i+1),x-i)
+      .lerp(corner(j+1,i).lerp(corner(j+1,i+1),x-i),y-j);
+  }
+  function maidStandingCollar(chest){
+    // Two cut fabric pieces wrap the throat. Their pointed fronts fold
+    // towards the knot, then taper to the shoulder seams and meet at the nape.
+    for(const side of [-1,1]){
+      const points=[],indices=[],panels=64,rows=6;
+      for(let r=0;r<=rows;r++)for(let j=0;j<=panels;j++){
+        const along=j/panels,t=r/rows;
+        const part=.5*along;
+        const u=.5+side*part,a=(u-.5)*Math.PI*2;
+        const lapel=Math.exp(-(((part-.029)/.041)**2));
+        const facing=Math.max(0,Math.cos(a));
+        const shoulder=Math.sin(a)**2;
+        const rim=onDress(u,0),hem=onDress(u,.004+.002*lapel);
+        // Tangential ease keeps the underside clear of the printed chest panel.
+        const ease=.0035+.0025*Math.sin(t*Math.PI);
+        const x=T.MathUtils.lerp(hem.x,rim.x*.78,1-t)+Math.sin(a)*ease;
+        const z=T.MathUtils.lerp(hem.z,rim.z*.86+.007,1-t)+Math.cos(a)*ease;
+        const rise=.011+.006*facing-.022*shoulder-.003*lapel;
+        const y=T.MathUtils.lerp(rim.y+rise,hem.y,t);
+        points.push(x,y,z);
+        if(r<rows&&j<panels){
+          const i=r*(panels+1)+j;
+          if(side>0)indices.push(i,i+panels+1,i+1,i+1,i+panels+1,i+panels+2);
+          else indices.push(i,i+1,i+panels+1,i+1,i+panels+2,i+panels+1);
+        }
+      }
+      const g=new T.BufferGeometry();g.setAttribute("position",new T.Float32BufferAttribute(points,3));
+      g.setIndex(indices);g.computeVertexNormals();
+      const fabric=material(0x292e4b);fabric.side=T.DoubleSide;
+      piece(chest,"女仆翻领"+(side<0?"左":"右"),g,fabric,0,0,0);
     }
+  }
+  function maidRibbon(chest){
+    // The satin is folded back to form a soft loop on each side of the clasp.
+    // Cross sections are closed ellipses. The pin catches the narrow roots.
+    const knot=onDress(.5,.023);
+    for(const side of [-1,1]){
+      const points=[],indices=[],rows=32,sections=24;
+      for(let row=0;row<=rows;row++){
+        const t=row/rows,open=Math.sin(t*Math.PI*.91);
+        const height=(.0035+.017*T.MathUtils.smoothstep(t,.04,.68))*
+          (1-.92*T.MathUtils.smoothstep(t,.90,1));
+        const depth=.0025+.0085*open;
+        for(let j=0;j<=sections;j++){
+          const a=(j/sections)*Math.PI*2;
+          const y=knot.y+.004+t*.011+height*Math.cos(a);
+          const z=knot.z+.013+depth*Math.sin(a)-.006*t*t+
+            .0017*open*Math.cos(3*a);
+          points.push(side*(.004+.054*t),y,z);
+          if(row<rows&&j<sections){
+            const i=row*(sections+1)+j;
+            if(side>0)indices.push(i,i+1,i+sections+1,i+1,i+sections+2,i+sections+1);
+            else indices.push(i,i+sections+1,i+1,i+1,i+sections+1,i+sections+2);
+          }
+        }
+      }
+      for(const row of [0,rows])for(let i=1;i<sections-1;i++){
+        const base=row*(sections+1);
+        if((row===0)===(side>0))indices.push(base,base+i+1,base+i);
+        else indices.push(base,base+i,base+i+1);
+      }
+      const g=new T.BufferGeometry();g.setAttribute("position",new T.Float32BufferAttribute(points,3));
+      g.setIndex(indices);g.computeVertexNormals();
+      const satin=material(0x282c50);satin.roughness=.59;
+      piece(chest,"女仆缎带结翼"+(side<0?"左":"右"),g,satin,0,0,0);
+    }
+  }
+  function apronStrap(parent,side){
     const points=[];
     const front=[[.353,.076],[.27,.077],[.205,.082],[.15,.09],[.095,.11],[.05,.128],[0,.149]];
     for(const [v,offset] of front)points.push(onDress(.5+side*offset,v));
-    const shoulder=onDress(.5+side*.25,0);
-    shoulder.y+=.003;points.push(shoulder);
+    points.push(onDress(.5+side*.25,0));
     for(const [v,offset] of [[0,.351],[.06,.362],[.15,.381],[.24,.393],[.351,.396]]){
       points.push(onDress(.5+side*offset,v));
     }
@@ -145,15 +211,20 @@ export function fitWardrobe({model,body,head,knees,garment,lap,redraw}){
       const normal=across.clone().cross(along).multiplyScalar(side).normalize();
       const upper=T.MathUtils.smoothstep(p.y,.128,.21),frontWeight=T.MathUtils.smoothstep(p.z,-.085,.05);
       const lace=upper*(.5+.5*frontWeight),wave=Math.cos(t*25*Math.PI);
+      // Keep the lace's free edge fluted down the chest and ease its gather
+      // over the shoulder seam, where the tape lies on the sleeve cap.
+      const gather=1-.65*(1-T.MathUtils.smoothstep(Math.abs(p.z),.035,.11));
       const lobe=.5-.5*wave;
-      const width=.024+.008*upper+lace*(.007+.024*lobe);
+      const shoulder=T.MathUtils.smoothstep(p.y,.245,.315);
+      const width=.024+.008*upper+lace*(.007+.024*lobe)*(1-.62*shoulder)*gather;
       for(let col=0;col<count;col++){
         const top=col<cross.length,f=cross[top?col:count-col-1];
         const flare=T.MathUtils.smoothstep(f,.48,1);
-        const height=.0035+.0018*Math.sin(f*Math.PI)+flare*lace*(.002+.016*lobe)
+        const height=.0035+.0018*Math.sin(f*Math.PI)+flare*lace*(.002+.016*lobe)*(1-.65*shoulder)*gather
           -(top?0:.0026);
         const vertex=p.clone().addScaledVector(across,width*f-.012)
           .addScaledVector(normal,height);
+        vertex.y-=.007*(1-gather)*T.MathUtils.smoothstep(p.y,.22,.30);
         pos.push(...vertex.toArray());
         weights.push(flare*lace);
         normals.push(...normal.toArray());tangents.push(...along.toArray());
@@ -234,20 +305,25 @@ export function fitWardrobe({model,body,head,knees,garment,lap,redraw}){
   }
   function outfitDetails(type){
     tailoredPanel(type);
-    buildUpperOutfit(type,{head,body,model,knees,group,piece,material,oval,addLace,registerLace});
+    buildUpperOutfit(type,{head,body,model,knees,group,piece,material,oval,addLace,registerLace,onDress});
     const h=group(head),chest=group(body);
     lowerLace=fitLowerLace({type,garment,restPosition:dressRest,parent:chest,knees,group,lace});
-    if(type==="maid")for(const side of [-1,1])apronStrap(chest,side);
+    if(type==="maid"){
+      maidStandingCollar(chest);
+      maidRibbon(chest);
+      for(const side of [-1,1])apronStrap(chest,side);
+    }
     const hand=model.getObjectByName("ElbowL");
     function held(){
       handheld=group(hand);handheld.position.set(-.02,-.17,.060);return handheld;
     }
-    function mantle(name,top,bottom,topRadius,bottomRadius,color,ruffle){
+    function mantle(name,top,bottom,topRadius,bottomRadius,color,ruffle,scoop=0){
       const pts=[],idx=[];
       for(let i=0;i<=20;i++)for(let j=0;j<=96;j++){
         const t=i/20,a=(j/96-.5)*2*Math.PI;
         const r=T.MathUtils.lerp(topRadius,bottomRadius,t)*(1+ruffle*t*Math.cos(14*a));
-        pts.push(r*Math.sin(a),T.MathUtils.lerp(top,bottom,t)+.010*t*Math.cos(14*a),r*.86*Math.cos(a)+.012);
+        const neckHeight=top-scoop*(.5+.5*Math.cos(a));
+        pts.push(r*Math.sin(a),T.MathUtils.lerp(neckHeight,bottom,t)+.010*t*Math.cos(14*a),r*.86*Math.cos(a)+.012);
         if(i<20&&j<96){const k=i*97+j;idx.push(k,k+97,k+1,k+1,k+97,k+98);}
       }
       const g=new T.BufferGeometry();g.setAttribute("position",new T.Float32BufferAttribute(pts,3));g.setIndex(idx);g.computeVertexNormals();
@@ -272,9 +348,16 @@ export function fitWardrobe({model,body,head,knees,garment,lap,redraw}){
         oval(wrist,"腕扣",gold,side*.033,.001,.045,.007,.007,.004,.48);
       }
     }
-    // The brooch and neckline sit above the tailored chest, away from the arm sweep.
-    oval(chest,"领口镶座",gold,0,.32,.142,.032,.038,.014,.58);
-    oval(chest,"蓝宝石领扣",0x4e83b6,0,.32,.155,.020,.026,.010,.32);
+    // Register small jewels to the sewn knots in the individual fabric prints.
+    // The sailor tie, nightgown and winter cape have their own cloth closures.
+    const knotUV={maid:[.5,.023],press:[.540,.068],summer:[.539,.144],star:[.504,.081],rain:[.506,.128]}[type];
+    if(knotUV){
+      const p=onDress(...knotUV), angle=(knotUV[0]-.5)*2*Math.PI;
+      const pin=new T.Group();chest.add(pin);pin.position.copy(p);pin.rotation.y=angle;
+      if(type==="maid")pin.position.z+=.012;
+      oval(pin,"领口镶座",gold,0,0,.003,.012,.015,.005,.58);
+      oval(pin,"蓝宝石领扣",0x527caa,0,0,.007,.008,.010,.004,.32);
+    }
     if(type==="maid"||type==="press"||type==="star"){
       line(h,"发饰垂链",[[.432,.015,.183],[.473,-.057,.185],[.488,-.114,.161]],.0038,gold,.65);
       star(h,.487,-.129,.16,.020);
@@ -304,7 +387,8 @@ export function fitWardrobe({model,body,head,knees,garment,lap,redraw}){
     if(type==="winter"){
       const p=chest;
       for(let i=0;i<20;i++){const a=2*Math.PI*i/20;
-        oval(p,"披肩绒领",pearl,.17*Math.sin(a),.320+.014*Math.cos(2*a),.125*Math.cos(a),.047,.037,.040);}
+        const height=.291-.033*(.5+.5*Math.cos(a));
+        oval(p,"披肩绒领",pearl,.155*Math.sin(a),height,.125*Math.cos(a)+.012,.046,.031,.037);}
       for(const knee of knees){const p=group(knee);
         oval(p,"冬靴绒口",pearl,0,-.059,.018,.082,.038,.076);}
     }
@@ -318,7 +402,7 @@ export function fitWardrobe({model,body,head,knees,garment,lap,redraw}){
       for(const k of knees){const p=group(k);oval(p,"亮面雨靴筒",0x343f6e,0,-.061,.012,.079,.088,.077,.18);}
     }
     if(type==="winter"){
-      mantle("海雾双层小披肩",.326,.18,.145,.251,0x65799c,.03);
+      mantle("海雾双层小披肩",.296,.18,.145,.251,0x65799c,.03,.033);
       mantle("披肩白绒镶边",.209,.178,.235,.256,pearl,.04);
     }
     if(type==="press"){
@@ -327,7 +411,8 @@ export function fitWardrobe({model,body,head,knees,garment,lap,redraw}){
       for(let i=0;i<9;i++)piece(paper,"报纸栏",new T.BoxGeometry(i%3?.112:.127,i===0?.013:.003,.002),material(0x6a6071),0,.111-i*.016,.012);
     }
     if(type==="summer"){
-      line(chest,"斜挎肩带",[[-.12,.32,.085],[-.06,.21,.158],[.065,.08,.16],[.15,-.04,.14]],.008,0xb7a084);
+      const shoulder=onDress(.355,.018);
+      line(chest,"斜挎肩带",[shoulder.toArray(),[-.06,.21,.158],[.065,.08,.16],[.15,-.04,.14]],.008,0xb7a084);
       const bag=oval(chest,"鲸鱼挎包",0x708eb8,.16,-.042,.157,.084,.064,.042);
       oval(chest,"挎包鲸腹",pearl,.159,-.065,.185,.072,.033,.021);
       oval(chest,"挎包眼睛",0x2f354f,.121,-.034,.194,.006,.007,.005);

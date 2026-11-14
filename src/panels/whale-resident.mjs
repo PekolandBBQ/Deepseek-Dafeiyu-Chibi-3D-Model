@@ -1,4 +1,5 @@
 import { fitMovingLayers } from "./whale-fit.mjs";
+import { finAndTailInertia } from "./whale-inertia.mjs";
 import { fitWardrobe, DEFAULT_OUTFIT } from "./whale-wardrobe.mjs";
 import * as T from "three";
 import detail from "../../assets/whale-face-detail.json";
@@ -28,11 +29,14 @@ export function makeWhale(redraw=()=>{}, {fit=true,bodyOnly=false}={}){
   function joint(parent,name,x,y,z){
     const g=new T.Bone();g.name=name;g.position.set(x,y,z);parent.add(g);joints.push(g);return g;
   }
-  function mesh(parent,name,shape,color,x,y,z){
+  function toon(color){
     if(!materials.has(color))materials.set(color,new T.MeshToonMaterial({color,gradientMap:ramp,
       emissive:new T.Color(color),emissiveIntensity:.22}));
+    return materials.get(color);
+  }
+  function mesh(parent,name,shape,color,x,y,z){
     geometry.add(shape);
-    const m=new T.Mesh(shape,materials.get(color));m.name=name;m.position.set(x,y,z);
+    const m=new T.Mesh(shape,toon(color));m.name=name;m.position.set(x,y,z);
     m.castShadow=true;m.receiveShadow=true;parent.add(m);return m;
   }
   function inkEdge(solid,amount){
@@ -56,7 +60,7 @@ export function makeWhale(redraw=()=>{}, {fit=true,bodyOnly=false}={}){
     shape.applyMatrix4(anchor.matrixWorld);
     shape.setAttribute("skinIndex",new T.Uint16BufferAttribute(skinIndex,4));
     shape.setAttribute("skinWeight",new T.Float32BufferAttribute(skinWeight,4));geometry.add(shape);
-    const skinMesh=new T.SkinnedMesh(shape,materials.get(color));
+    const skinMesh=new T.SkinnedMesh(shape,toon(color));
     skinMesh.name=name;model.add(skinMesh);skinMesh.frustumCulled=false;
     const skeleton=new T.Skeleton(bones);skinMesh.bind(skeleton);skeletons.push(skeleton);skinMesh.castShadow=true;
   }
@@ -216,24 +220,61 @@ export function makeWhale(redraw=()=>{}, {fit=true,bodyOnly=false}={}){
     if(!materials.has("strandGradient"))materials.set("strandGradient",new T.MeshToonMaterial({vertexColors:true,gradientMap:ramp}));
     strand.material=materials.get("strandGradient");return strand;
   }
-  const body=joint(model,"Body",0,.54,0),head=joint(body,"Head",0,.762,-.032);
+  const body=joint(model,"Body",0,.54,0),head=joint(body,"Head",0,.827,-.032);
+  // Head geometry is authored around its centre. Rotate that centre about the
+  // top of the neck so a nod keeps the jaw attached to the cervical joint.
+  const neckPivot=new T.Vector3(0,.396,.123);
+  const headOffset=head.position.clone().sub(neckPivot);
   head.scale.set(.954,1.10,1.02);
   body.scale.set(1.105,.96,1.04);
   // One neutral mannequin surface runs from the shoulder girdle to the hips.
   const torso=armSurface(1,[
-    [.391,0,.038,.044],[.367,0,.066,.061],[.342,0,.093,.074],
-    [.318,0,.119,.087],[.292,0,.140,.093],[.264,0,.150,.096],
+    [.391,0,.025,.032],[.367,0,.036,.043],[.342,0,.048,.052],
+    [.318,0,.065,.061],[.292,0,.117,.089],[.264,0,.150,.096],
     [.235,0,.151,.097],[.201,0,.139,.096],[.168,0,.130,.097],
     [.110,0,.124,.094],[.058,0,.117,.089],[.018,0,.118,.088],
     [-.033,0,.129,.096],[-.079,0,.139,.099],[-.121,0,.140,.096],
     [-.151,0,.122,.086],[-.175,0,.091,.065],[-.189,0,.048,.039],
     [-.193,0,.015,.014]
   ]);
-  mesh(body,"BodyCore",capEnds(torso),skin,0,0,.003);
-  oval(body,"Neck",skin,0,.355,.023,.080,.080,.070);
+  // Bake a soft submental shadow into the upper-chest vertices. The large
+  // head blocks skylight here even in a shadowless studio.
+  capEnds(torso);
+  const neckShadow=[],torsoPoints=torso.attributes.position;
+  for(let i=0;i<torsoPoints.count;i++){
+    const shade=T.MathUtils.smoothstep(torsoPoints.getY(i),.276,.349);
+    neckShadow.push(1-.40*shade,1-.53*shade,1-.53*shade);
+  }
+  torso.setAttribute("color",new T.Float32BufferAttribute(neckShadow,3));
+  const chestSkin=mesh(body,"BodyCore",torso,skin,0,0,.003);
+  chestSkin.material=chestSkin.material.clone();chestSkin.material.vertexColors=true;
+  materials.set("bodySkin",chestSkin.material);
+  const neck=armSurface(1,[
+    [.474,0,.040,.053],[.438,0,.040,.052],[.397,0,.040,.048],
+    [.369,0,.041,.046],[.350,0,.042,.044],[.333,0,.043,.041],[.311,0,.043,.038]
+  ]);
+  const neckPoints=neck.attributes.position;
+  for(let i=0;i<neckPoints.count;i++){
+    const offset=.018*T.MathUtils.smoothstep(neckPoints.getY(i),.337,.417);
+    neckPoints.setZ(i,neckPoints.getZ(i)+offset);
+  }
+  // The projecting chin casts a soft contact shadow along the short neck.
+  mesh(body,"Neck",capEnds(neck),"#d6b1a7",0,0,.003);
   const tail=joint(body,"WhaleTail",0,.04,-.19);
-  ribbon(tail,"TailStem",blue,[[0,0,.14],[0,0,0],[.20,-.19,-.21],[.62,-.20,-.30],[.83,.047,-.32]],.074);
-  const flukes=joint(tail,"Flukes",.83,.047,-.32);
+  const tailBend=joint(tail,"TailBend",.40,-.21,-.25);
+  const flukes=joint(tailBend,"Flukes",.43,.257,-.07);
+  const tailPath=new T.CatmullRomCurve3([[0,0,.14],[0,0,0],[.20,-.19,-.21],[.62,-.20,-.30],[.83,.047,-.32]]
+    .map(point=>new T.Vector3(...point)));
+  const tailSkin=new T.TubeGeometry(tailPath,32,.074,10,false);
+  const tailIndices=[],tailWeights=[];
+  for(let row=0;row<=32;row++){
+    const weight=T.MathUtils.smoothstep(tailPath.getPointAt(row/32).x,.22,.61);
+    for(let column=0;column<=10;column++){
+      tailIndices.push(0,weight>0?1:0,0,0);tailWeights.push(1-weight,weight,0,0);
+    }
+  }
+  model.updateMatrixWorld(true);
+  bindSkin(tailSkin,tail,[tail,tailBend],tailIndices,tailWeights,blue,"TailStem");
   for(const s of [-1,1]){
     const fin=new T.Shape();fin.moveTo(0,0);
     fin.bezierCurveTo(.06,.047,.23,.105,.28,.098);
@@ -261,11 +302,15 @@ export function makeWhale(redraw=()=>{}, {fit=true,bodyOnly=false}={}){
       // Gather the side panels at hand height. The reference skirt flares
       // below the wrists, leaving the forearms free to hang under the elbows.
       const sideGather=.078*Math.exp(-((v-.615)**2)/.017)*Math.sin(a)**6;
-      // The neckline stays high in front. The shoulder panel falls away
-      // towards the armhole instead of ending in a horizontal rim at the side.
-      const shoulderDrop=.057*Math.sin(a)**2*(1-T.MathUtils.smoothstep(v,0,.23));
-      dressPoints.push(Math.sin(a)*(radius-sideGather)*(1+.034*pleat),T.MathUtils.lerp(dressTop,dressBottom,v)-shoulderDrop+.009*pleat,
-        Math.cos(a)*radius*(v<.35?.82:.77)*(1+.034*pleat)+.01);
+      // Preserve the armhole height and give the front a round neck opening.
+      // Ease the alteration into the chest above the fixed apron waistband.
+      const facing=Math.cos(a);
+      const neckDepth=.082+.002*facing*facing;
+      const neckDrop=neckDepth*(1-T.MathUtils.smoothstep(v,0,.34));
+      const opening=1-T.MathUtils.smoothstep(v,0,.12);
+      const neckEase=.024*opening;
+      dressPoints.push(Math.sin(a)*(radius-sideGather-(.019+.014*facing*facing)*opening)*(1+.034*pleat),T.MathUtils.lerp(dressTop,dressBottom,v)-neckDrop+.009*pleat,
+        facing*(radius*(v<.35?.82:.77)-neckEase)*(1+.034*pleat)+.01);
       dressUV.push(u,1-v);
       if(j<sections&&row<64){const i=row*(sections+1)+j;
         dressIndices.push(i,i+sections+1,i+1,i+1,i+sections+1,i+sections+2);}
@@ -692,7 +737,6 @@ export function makeWhale(redraw=()=>{}, {fit=true,bodyOnly=false}={}){
     const quiet=freeArm(0)&&freeArm(1)&&kind!=="walk"&&kind!=="yard";
     const lean=quiet?motionLean*.24:motionLean;
     body.position.y+=feet*(rest?.13:.80);
-    head.position.y=.762+lift*(rest?.13:.44);
     body.rotation.z=lean*.47;head.rotation.z+=lean*1.35;
     head.rotation.y+=lean*1.9;back.rotation.z=-lean*.40;
     for(let i=0;i<waves.length;i++)waves[i].rotation.z+=-lean*.66+Math.sin(t*2.1+i)*Math.abs(feet)*.6;
@@ -733,11 +777,21 @@ export function makeWhale(redraw=()=>{}, {fit=true,bodyOnly=false}={}){
       legs.forEach(leg=>leg.rotation.y=0);
       if(kind==="swing")knees.forEach((k,i)=>k.rotation.x=.72+.18*Math.sin(2.5*t+i*.15));
     }
+    head.position.copy(headOffset).applyQuaternion(head.quaternion).add(neckPivot);
+    // The reference lift contains torso compression. At the neck a downward
+    // excursion is smaller, preserving the jaw clearance as the head turns.
+    head.position.y+=lift*(rest?.13:lift<0?.075:.44);
+    // The chin glides around the neck on a nod or turn. Include its small
+    // cervical extension, especially while blending out of a sleeping pose.
+    const headAngle=Math.hypot(head.rotation.x,head.rotation.y,head.rotation.z);
+    head.position.y+=.013*T.MathUtils.smoothstep(headAngle,.065,.22);
     tail.rotation.y=(rest?-.68:0)+Math.sin(t*(rest?.8:1.7))*(rest?.04:.15)-lean*.72;
     flukes.rotation.x=.12*Math.sin(t*(rest?.85:2.1)-.32);
   }
   let current="",transition=null,elapsed=0;
+  const inertia=finAndTailInertia(fins,tail,tailBend,flukes);
   function pose(kind,t,{blend=false,dt=0,snap=false}={}){
+    inertia.removeOffsets();
     if(snap)transition=null;
     if(kind!==current){
       transition=blend&&current?joints.map(n=>[n.position.clone(),n.quaternion.clone(),n.scale.clone()]):null;
@@ -750,6 +804,7 @@ export function makeWhale(redraw=()=>{}, {fit=true,bodyOnly=false}={}){
       joints.forEach((n,i)=>{n.position.lerp(transition[i][0],1-w);n.quaternion.slerp(transition[i][1],1-w);n.scale.lerp(transition[i][2],1-w);});
       if(w>=1)transition=null;
     }
+    inertia.update(dt,snap);
     const bend=Math.max(0,-legs[0].rotation.x,-legs[1].rotation.x);
     const fold=T.MathUtils.smoothstep(bend,.25,1.49);
     garment.morphTargetInfluences[0]=hemOutline.morphTargetInfluences[0]=fold;

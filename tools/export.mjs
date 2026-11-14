@@ -1,6 +1,6 @@
 import {mkdir,writeFile,rename} from "node:fs/promises";
 import {join} from "node:path";
-import {root} from "./build.mjs";
+import {buildSite,root} from "./build.mjs";
 import {runBrowser} from "./browser.mjs";
 
 const args=process.argv.slice(2),valid=["models","mirror","scenes","wardrobe"];
@@ -23,6 +23,12 @@ await runBrowser(async(page,url)=>{
       images[name]=await page.evaluate(async n=>(await studio.frame(n)).picture,name);
     }
     await replace("mirror-portraits.json",JSON.stringify(images));console.log("镜像",Object.keys(images).length);
+    if(enabled("scenes")){
+      // The studio embeds portraits at build time. Reload the new bundle before baking the mirror into the room.
+      await buildSite();
+      await page.reload();
+      await page.waitForFunction(()=>typeof window.sceneFile==="function"&&window.studio);
+    }
   }
   if(enabled("scenes"))for(const [part,name] of [["room","小屋室内.glb"],["yard","篱下小院.glb"]]){
     const bytes=Buffer.from(await page.evaluate(key=>window.sceneFile(key),part),"base64");

@@ -2,9 +2,13 @@
 
 这是一套社区制作的 Deepseek（大肥鱼）Q 版三维角色资产，包含独立素体、八套穿搭和布料动画。可以在浏览器中走近她的书桌、衣柜和庭院，也可以下载带骨架的 GLB 或用 Three.js 源码继续制作。独立预览使用本地生成的示范动作和猫狗路径。屏幕上的动作记录只在本次预览中存在。
 
+[![蓝鲸女仆正面全身和领口近景。三列依次为原设定、上一版试作和 v1.0.2 模型，按脸宽对齐](previews/wardrobe/maid-neck-comparison.webp)](previews/wardrobe/maid-neck-comparison.webp)
+
+右列是 v1.0.2 的蓝鲸女仆。下巴下方露出一小段颈部，深蓝翻领贴着衣身，领结的两翼由独立的缎带网格塑形。
+
 ## 资产图集
 
-[360° 全景](#360-全景) · [小屋室内](#小屋室内) · [篱下小院](#篱下小院) · [大肥鱼的衣柜](#大肥鱼的衣柜) · [模型下载](https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/releases/tag/v1.0.1)
+[360° 全景](#360-全景) · [小屋室内](#小屋室内) · [篱下小院](#篱下小院) · [大肥鱼的衣柜](#大肥鱼的衣柜) · [模型下载](https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/releases/tag/v1.0.2)
 
 [![黄昏时的全景，篱灯沿院墙亮起，石径从篱门通往小屋](previews/panoramas/cottage-at-dusk.webp)](previews/panoramas/cottage-at-dusk.webp)
 
@@ -50,6 +54,8 @@
 
 [![八套穿搭的全身像：蓝鲸女仆、深蓝报刊装、夏日水手服、特别礼服、蓝白水手常服、海雾冬装、睡衣和鲸鱼伞雨衣](previews/wardrobe/outfits.webp)](previews/wardrobe/outfits.webp)
 
+[![八套穿搭在同一机位调整前后的下巴、领结与领口近景](previews/wardrobe/necklines.webp)](previews/wardrobe/necklines.webp)
+
 **海风日记 · 夏日水手服**
 
 [![夏日装的斜前全身像、镂孔草帽边、鲸鱼挎包和双层裙摆](previews/wardrobe/summer-details.webp)](previews/wardrobe/summer-details.webp)
@@ -65,6 +71,10 @@
 **走动与收步**
 
 [![蓝鲸女仆走动、停步时，肩带和袖口蕾丝随动作摆动并回稳](previews/maid-walk.webp)](previews/maid-walk.webp)
+
+鳍耳、尾柄和尾鳍跟随头部与躯干的实际运动。耳尖在落脚时轻轻上下回弹，尾柄中段和两瓣尾鳍依次跟上。动图的三个机位取自同一帧。
+
+[![全身、单侧鳍耳与尾鳍同步近景，可见走路、收步与回稳](previews/fin-tail-motion.webp)](previews/fin-tail-motion.webp)
 
 ## 本地预览
 
@@ -82,7 +92,7 @@ npm run preview
 - [大肥鱼与默认女仆装](assets/大肥鱼.glb) 和 [无服饰基础身体](assets/大肥鱼-基础身体.glb) 各含 16 段动画。身体、手臂、头发、眼睛和尾巴属于角色。衣料、穿搭配饰和蕾丝单独绑定。
 - [小屋室内](assets/小屋室内.glb) 包含家具、默认装束的穿衣镜和灯光，从书桌、衣柜到床铺可按节点选择。室内体素使用 glTF 的 `EXT_mesh_gpu_instancing`，导入器需要支持该扩展。
 - [篱下小院](assets/篱下小院.glb) 包含池塘和三条金鱼、猫狗、花架、枫树、秋千、餐桌与壁炉。室内和庭院 GLB 保存的是场景快照。动物路线、日照和家具交互由网页源码驱动。
-- 两个场景和九个独立角色文件可在 [v1.0.1 发布页](https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/releases/tag/v1.0.1) 获取，也可用下方命令生成。
+- 两个场景和九个独立角色文件可在 [v1.0.2 发布页](https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/releases/tag/v1.0.2) 获取，也可用下方命令生成。
 
 ## 重新构建
 
@@ -92,8 +102,8 @@ npx playwright install chromium
 npm test
 npm run export -- models
 npm run export -- wardrobe
-npm run export -- scenes
 npm run export -- mirror
+npm run export -- scenes
 ```
 
 `build` 将静态网页写入 `dist/`。`test` 启动本地服务器和 Chromium，打开实际房间、换装、穿衣镜和庭院，并渲染全部八套穿搭。`export` 使用同一套 Three.js 源码和已安装的 Chromium。已有 Google Chrome 时，也可设置环境变量 `PLAYWRIGHT_CHANNEL=chrome`。浏览器需支持 WebGL 2。
@@ -102,6 +112,8 @@ npm run export -- mirror
 
 安装上述依赖和 Chromium 后，运行 `node tools/check-rig.mjs` 可用实际角色检查蕾丝在不同帧率下的回弹、瞬移复位，以及换装时身体与饰边的分离。
 
+运行 `node tools/check-neck.mjs` 可检查八套服装在动作和转场中的领口间隙，以及素体颈部与头、肩的连接。运行 `node tools/check-fin-tail.mjs` 可复查鳍耳、尾柄和尾鳍的惯性与收步回稳。
+
 | 参数 | 生成内容 |
 | --- | --- |
 | `models` | 默认女仆装、无服饰基础身体，写入 `assets/` |
@@ -109,7 +121,7 @@ npm run export -- mirror
 | `scenes` | 室内和院落两个独立 GLB，写入 `assets/` |
 | `mirror` | 以固定镜头为八套服装重新拍摄全身像，写入 `assets/mirror-portraits.json` |
 
-不带参数时，导出默认角色、素体、室内、庭院及八张镜像。镜像更新后再次运行 `npm run build` 即可打包新图。
+不带参数时，导出默认角色、素体、八张镜像及两个场景。一起导出 `mirror` 和 `scenes` 时，导出器会重新载入刚拍好的镜像，再烘焙室内 GLB 的柜门。
 
 `src/panels/` 包含房间、角色、服装、蕾丝动力学、院落、动物和家具的建模代码。`assets/衣柜参考图/` 保存服装设定图。`tools/bake-outfit-surfaces.py` 可用 Python、Pillow、NumPy 和 OpenCV 从这些图片重做服装表面与脸部细节。沿用桌宠动作或外观投影时，`bake-dsh-motion.py` 和 `bake-dsh-surfaces.py` 额外需要各自的原始动作视频、相应转身素材及 FFmpeg。常规网页与 GLB 构建直接读取仓库中的烘焙结果。原转身动图的尺寸、帧数及校验值见[来源说明](THIRD_PARTY_NOTICES.md)。
 
@@ -120,7 +132,8 @@ python -m pip install pillow numpy opencv-python resvg-py==0.5.0
 python tools/bake-dsh-surfaces.py /path/to/videos /path/to/ffmpeg /path/to/turnaround.gif assets/whale-toon-face.json
 python tools/bake-dsh-motion.py /path/to/videos /path/to/ffmpeg assets/dsh-motion.json
 python tools/bake-outfit-surfaces.py
-npm run export -- models wardrobe scenes mirror
+npm run export -- mirror
+npm run export -- models wardrobe scenes
 ```
 
 ## 署名与使用

@@ -129,8 +129,8 @@ function pressShirt(api,chest){
   for(const side of [-1,1]){
     const frames=[];
     for(let i=0;i<=36;i++){
-      const t=i/36,y=.348-.125*t,x=side*(.061-.025*t),z=.127+.020*t;
-      frames.push({root:[x,y,z],hem:[x+side*.014,y-.006,z+.006],normal:[0,.06,1]});
+      const t=i/36,p=api.onDress(.5+side*(.058-.022*t),.027+.161*t);
+      frames.push({root:[p.x,p.y,p.z+.002],hem:[p.x+side*.014,p.y-.006,p.z+.008],normal:[0,.06,1]});
     }
     api.addLace(chest,"报刊衬衫领襟褶边",frames,{closed:false,color:pearl,scallops:8,maxTravel:.003});
   }

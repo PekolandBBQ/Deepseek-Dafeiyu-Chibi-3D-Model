@@ -14,8 +14,14 @@ export function cameraPetActor(scene,stock,redraw){
     await rig.ready;await rig.setOutfit(s.outfit?.name);
     stock().visible=false;const actor=rig.model;actor.visible=true;scene.userData.yardResident=actor;
     actor.position.set(e.actor[0],groundY,e.actor[2]);actor.rotation.y=e.action==="fetch"?-1.1:0;
-    const t=s.epoch-e.start-e.contact;
-    rig.pose(t<0||e.action==="bench"?"invite":e.action,Math.max(t,0),{snap:true});
+    // The yard camera takes a still at the event timestamp. Reconstruct the
+    // preceding movement so a mid-gesture fin or tail has the same follow-through.
+    const t=s.epoch-e.start,frames=Math.min(24,Math.floor(Math.max(0,t)*30));
+    for(let i=0;i<=frames;i++){
+      const contactTime=t-(frames-i)/30-e.contact;
+      rig.pose(contactTime<0||e.action==="bench"?"invite":e.action,Math.max(contactTime,0),
+        {snap:i===0,dt:i?1/30:0});
+    }
   },dispose(){rig?.dispose();delete scene.userData.yardResident;}};
 }
 
