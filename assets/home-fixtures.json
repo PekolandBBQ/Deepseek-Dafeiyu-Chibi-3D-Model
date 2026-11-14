@@ -1,0 +1,21 @@
+{
+  "table": [16.48, 3.65],
+  "tableApproach": [16.36, 4.98],
+  "hearth": [0.94, 4.96],
+  "hearthApproach": [1.95, 3.74],
+  "fenceHeight": 5.12,
+  "lanternSpacing": 4,
+  "fenceLightApproach": [7.33, 10.22],
+  "menu": [
+    {"id":"rice", "name":"白米饭", "description":"正中间的一大碗白米饭", "at":[0,0.04]},
+    {"id":"noodles", "name":"热汤面", "description":"热汤面里卧着一个蛋，汤面上撒着葱花", "at":[-1.34,0.40]},
+    {"id":"roast", "name":"烤肉", "description":"烤肉切成厚片，最边上一块烤得有点焦", "at":[1.36,-0.43]},
+    {"id":"buns", "name":"蟹黄汤包", "description":"一小笼蟹黄汤包", "at":[-0.69,-0.42]},
+    {"id":"soup", "name":"姜丝椰子汤", "description":"用大碗装的姜丝椰子汤", "at":[1.32,0.39]},
+    {"id":"shrimp", "name":"炸虾球", "description":"一盘金黄的炸虾球", "at":[0.67,-0.42]},
+    {"id":"cakes", "name":"薯饼", "description":"两面煎黄的薯饼", "at":[-1.38,-0.42]},
+    {"id":"orange", "name":"剥好的橘子", "description":"剥好皮、分成瓣的橘子", "at":[0.66,0.40]},
+    {"id":"greens", "name":"青菜", "description":"一小碟青菜", "at":[-0.66,0.41]},
+    {"id":"sweets", "name":"点心", "description":"留作收尾的花形小点心", "at":[0,0.65]}
+  ]
+}

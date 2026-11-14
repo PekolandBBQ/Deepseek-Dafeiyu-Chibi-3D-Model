@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>大肥鱼的小屋</title>
+<style>*{box-sizing:border-box}body{margin:0;background:#eae4d7;color:#302d35;font:15px system-ui,sans-serif}
+header{display:flex;align-items:center;gap:18px;flex-wrap:wrap;padding:10px 16px;background:#f5f3ed}
+h1{font:600 19px system-ui;margin:0}select,button{font:inherit}label{display:flex;gap:7px;align-items:center}
+#room{position:relative;width:100%;height:calc(100dvh - 56px);min-height:420px;overflow:hidden}#room>canvas{display:block;width:100%;height:100%}
+@media(max-width:620px){header{gap:8px}h1{width:100%}#room{height:calc(100dvh - 86px)}}</style>
+<header><h1>大肥鱼的小屋</h1><label>衣柜<select id="outfit"></select></label><label>动作<select id="action"></select></label></header>
+<main id="room" aria-label="三维小屋"></main><script type="module" src="./app.js"></script></html>
