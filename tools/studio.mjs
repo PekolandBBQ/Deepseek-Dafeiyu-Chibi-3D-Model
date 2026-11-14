@@ -16,7 +16,10 @@ window.sceneFile=async part=>{
   holder.style.cssText="width:640px;height:480px";document.body.appendChild(holder);
   const room=window.PrivateCompanionHomeRoom3D.mount(holder,{exportOnly:true});
   try{
-    const nodes=await room.sceneRoots(part,readDemoState("page/yard"));
+    // Freeze the snapshot's animal poses, leaves and fire at a repeatable
+    // instant. The interactive room continues to use its running clock.
+    const state={...readDemoState("page/yard"),epoch:Date.UTC(2026,10,15,4)/1000,replay:true};
+    const nodes=await room.sceneRoots(part,state);
     for(const root of nodes)root.traverse(obj=>{
       if(!obj.name&&obj.userData.station)obj.name=obj.userData.station;
     });

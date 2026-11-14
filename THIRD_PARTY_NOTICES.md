@@ -8,6 +8,8 @@
 
 动作与部分外观表面的采样参考 shenshen 桌宠 4.2.1，安装包登记的发布者为 merzlin。本地 4.2.1 的“待机呼吸休闲.webm”与上游同名文件的 Git blob 均为 fd64a428a2be1d3b4ff6cd7f9867dfe978ba0bbb。公开可核查的桌宠上游是 PC2005-cloud/dsh-pet。该项目区分程序代码与角色形象的授权。其程序的 MIT 版权声明为 Copyright (c) 2026 PC2005-cloud。[上游项目](https://github.com/PC2005-cloud/dsh-pet) · [MIT 原文](licenses/DSH-Pet-MIT.txt)
 
+基础脸部与后发的早期投影另参考了维护者提供的草地转身动图。原图为 258 × 458、122 帧的 GIF，SHA-256 为 `ba270f4bbf2858a8c0ec35165bc487480ac57f25bef175f6de16571464e8c110`。目前无法从附件确认这张动图的制作者。公开工程包含完成的角色图集和投影脚本，原始动图单独保存在维护者的本地素材库。
+
 ## 小屋、院落和工具
 
 房间场景以 menglimi 及贡献者的 astrbot_plugin_private_companion 为基础。六个 `home-room-*` 模块对应的上游文件在 v7.1.6 与 v7.1.20 两标签下逐个具有相同的 Git blob ID。v7.1.20 收录 AGPL-3.0 许可原文。本项目在这些代码上扩展了角色、房间和院落，并改编了独立网页入口及导出接口。场景源码与本仓库的构建工具采用 AGPL-3.0。在网络上运行修改版本时也应遵守该许可中提供对应源代码的条款。[上游的六个房间模块](https://github.com/menglimi/astrbot_plugin_private_companion/tree/e0102767ee452d7561f5d815bc6b9b9847501277/pages/陪伴小屋/assets/voxel-source/panels) · [许可原文](LICENSE)

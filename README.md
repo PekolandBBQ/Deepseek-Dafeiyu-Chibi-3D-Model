@@ -22,7 +22,7 @@ npm run preview
 - [大肥鱼与默认女仆装](assets/大肥鱼.glb) 和 [无服饰基础身体](assets/大肥鱼-基础身体.glb) 各含 16 段动画。身体、手臂、头发、眼睛和尾巴属于角色。衣料、穿搭配饰和蕾丝单独绑定。
 - [小屋室内](assets/小屋室内.glb) 包含家具、默认装束的穿衣镜和灯光，从书桌、衣柜到床铺可按节点选择。室内体素使用 glTF 的 `EXT_mesh_gpu_instancing`，导入器需要支持该扩展。
 - [篱下小院](assets/篱下小院.glb) 包含池塘和三条金鱼、猫狗、花架、枫树、秋千、餐桌与壁炉。室内和庭院 GLB 保存的是场景快照。动物路线、日照和家具交互由网页源码驱动。
-- 九个独立角色文件可在 [v1.0.0 发布页](https://github.com/PekolandBBQ/dafeiyu-cottage-3d/releases/tag/v1.0.0) 获取，也可用下方命令生成。
+- 两个场景和九个独立角色文件可在 [v1.0.0 发布页](https://github.com/PekolandBBQ/dafeiyu-cottage-3d/releases/tag/v1.0.0) 获取，也可用下方命令生成。
 
 ## 重新构建
 
@@ -49,7 +49,17 @@ npm run export -- mirror
 
 不带参数时，导出默认角色、素体、室内、庭院及八张镜像。镜像更新后再次运行 `npm run build` 即可打包新图。
 
-`src/panels/` 包含房间、角色、服装、蕾丝动力学、院落、动物和家具的建模代码。`assets/衣柜参考图/` 保存服装设定图。`tools/bake-outfit-surfaces.py` 可用 Python、Pillow、NumPy 和 OpenCV 从这些图片重做服装表面与脸部细节。沿用桌宠动作或外观投影时，`bake-dsh-motion.py` 和 `bake-dsh-surfaces.py` 额外需要各自的原始动作视频、相应转身素材及 FFmpeg。常规网页与 GLB 构建直接读取仓库中的烘焙结果。
+`src/panels/` 包含房间、角色、服装、蕾丝动力学、院落、动物和家具的建模代码。`assets/衣柜参考图/` 保存服装设定图。`tools/bake-outfit-surfaces.py` 可用 Python、Pillow、NumPy 和 OpenCV 从这些图片重做服装表面与脸部细节。沿用桌宠动作或外观投影时，`bake-dsh-motion.py` 和 `bake-dsh-surfaces.py` 额外需要各自的原始动作视频、相应转身素材及 FFmpeg。常规网页与 GLB 构建直接读取仓库中的烘焙结果。原转身动图的尺寸、帧数及校验值见[来源说明](THIRD_PARTY_NOTICES.md)。
+
+从原始输入重做贴图与动作时，可以按下列顺序执行。将视频目录、FFmpeg 和动图的示例路径替换为本机路径。
+
+```sh
+python -m pip install pillow numpy opencv-python
+python tools/bake-dsh-surfaces.py /path/to/videos /path/to/ffmpeg /path/to/turnaround.gif assets/whale-toon-face.json
+python tools/bake-dsh-motion.py /path/to/videos /path/to/ffmpeg assets/dsh-motion.json
+python tools/bake-outfit-surfaces.py
+npm run export -- models wardrobe scenes mirror
+```
 
 ## 署名与使用
 
