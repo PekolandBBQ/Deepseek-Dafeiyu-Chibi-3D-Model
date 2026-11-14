@@ -1,6 +1,6 @@
-# 大肥鱼小屋资产图集
+# Deepseek（大肥鱼）Q版3D模型 · 资产图集
 
-这些画面取自 v1.0.0 的公开三维模型。点图可查看原尺寸。[模型下载](https://github.com/PekolandBBQ/dafeiyu-cottage-3d/releases/tag/v1.0.0) · [来源与许可](../THIRD_PARTY_NOTICES.md)
+这些画面取自 v1.0.0 的公开三维模型。点图可查看原尺寸。[模型下载](https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/releases/tag/v1.0.0) · [来源与许可](../THIRD_PARTY_NOTICES.md)
 
 ## 小屋与院子
 

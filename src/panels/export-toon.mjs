@@ -88,7 +88,7 @@ export async function buildGLB({bodyOnly=false,outfit}={}){
     writer.json.asset.copyright="溟月原型：上善无形；女仆鲸鱼娘设计：ZipZipPipe。大肥鱼三维演绎与穿搭，CC BY-NC-SA 4.0。";
     writer.json.asset.extras={
       license:"https://creativecommons.org/licenses/by-nc-sa/4.0/",
-      credits:"https://github.com/PekolandBBQ/dafeiyu-cottage-3d/blob/v1.0.0/THIRD_PARTY_NOTICES.md"
+      credits:"https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/blob/v1.0.0/THIRD_PARTY_NOTICES.md"
     };
     // Three chooses the first weighted bone as the skeleton root. A hip skin
     // also uses the torso, a sibling of the thigh. Export their common root.

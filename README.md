@@ -1,10 +1,10 @@
-# 大肥鱼的小屋
+# Deepseek（大肥鱼）Q版3D模型
 
-可以在浏览器中走近大肥鱼的书桌、衣柜、床边和院子，切换八套衣服，查看穿衣镜，或单独导出带骨架的角色。独立预览使用本地生成的示范动作和猫狗路径。屏幕上的动作记录只在本次预览中存在。
+本项目提供 Deepseek（大肥鱼）的 Q 版三维角色、独立素体和八套穿搭，支持换装与布料动画。可以在浏览器中走近她的书桌、衣柜和庭院，也可以下载带骨架的 GLB 或用 Three.js 源码继续制作。独立预览使用本地生成的示范动作和猫狗路径。屏幕上的动作记录只在本次预览中存在。
 
 ## 资产图集
 
-[360° 全景](#360-全景) · [小屋室内](#小屋室内) · [篱下小院](#篱下小院) · [大肥鱼的衣柜](#大肥鱼的衣柜) · [模型下载](https://github.com/PekolandBBQ/dafeiyu-cottage-3d/releases/tag/v1.0.0)
+[360° 全景](#360-全景) · [小屋室内](#小屋室内) · [篱下小院](#篱下小院) · [大肥鱼的衣柜](#大肥鱼的衣柜) · [模型下载](https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/releases/tag/v1.0.0)
 
 [![黄昏时的全景，篱灯沿院墙亮起，石径从篱门通往小屋](previews/panoramas/cottage-at-dusk.webp)](previews/panoramas/cottage-at-dusk.webp)
 
@@ -78,7 +78,7 @@ npm run preview
 - [大肥鱼与默认女仆装](assets/大肥鱼.glb) 和 [无服饰基础身体](assets/大肥鱼-基础身体.glb) 各含 16 段动画。身体、手臂、头发、眼睛和尾巴属于角色。衣料、穿搭配饰和蕾丝单独绑定。
 - [小屋室内](assets/小屋室内.glb) 包含家具、默认装束的穿衣镜和灯光，从书桌、衣柜到床铺可按节点选择。室内体素使用 glTF 的 `EXT_mesh_gpu_instancing`，导入器需要支持该扩展。
 - [篱下小院](assets/篱下小院.glb) 包含池塘和三条金鱼、猫狗、花架、枫树、秋千、餐桌与壁炉。室内和庭院 GLB 保存的是场景快照。动物路线、日照和家具交互由网页源码驱动。
-- 两个场景和九个独立角色文件可在 [v1.0.0 发布页](https://github.com/PekolandBBQ/dafeiyu-cottage-3d/releases/tag/v1.0.0) 获取，也可用下方命令生成。
+- 两个场景和九个独立角色文件可在 [v1.0.0 发布页](https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/releases/tag/v1.0.0) 获取，也可用下方命令生成。
 
 ## 重新构建
 

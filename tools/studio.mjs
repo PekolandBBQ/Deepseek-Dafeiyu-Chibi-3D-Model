@@ -26,7 +26,7 @@ window.sceneFile=async part=>{
     const exporter=new GLTFExporter();
     exporter.register(writer=>({afterParse(){
       writer.json.asset.copyright="小屋基于 menglimi/astrbot_plugin_private_companion。大肥鱼小屋场景、建模源码与修改见项目仓库。";
-      const credits="https://github.com/PekolandBBQ/dafeiyu-cottage-3d/blob/v1.0.0/THIRD_PARTY_NOTICES.md";
+      const credits="https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/blob/v1.0.0/THIRD_PARTY_NOTICES.md";
       writer.json.asset.extras={sceneLicense:"AGPL-3.0",credits};
       if(part==="room"){
         writer.json.asset.extras.mirrorPortrait="溟月原型：上善无形；女仆鲸鱼娘设计：ZipZipPipe。镜中角色三维演绎，CC BY-NC-SA 4.0。";

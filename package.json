@@ -1,6 +1,7 @@
 {
-  "name": "dafeiyu-cottage-3d",
+  "name": "deepseek-dafeiyu-chibi-3d-model",
   "version": "1.0.0",
+  "description": "Deepseek（大肥鱼）Q版3D模型，含独立素体、八套可换穿搭、布料动画，以及配套的小屋和庭院。提供 Three.js 源码、可导入的 GLB 和构建工具。",
   "private": true,
   "type": "module",
   "scripts": {
