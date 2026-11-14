@@ -4,7 +4,9 @@
 
 「溟月」原型来自上善无形。女仆鲸鱼娘／DeepSeek 版本由 ZipZipPipe 设计。此仓库中的大肥鱼为基于这些设计的三维演绎，制作中包含重新建模、分体服装与物理花边、动作采样及 UV 图像投影。共享角色形象、服装参考图、角色图集、衣柜镜像、动作参考数据和含角色的 GLB 时，请保留此署名、标注修改，遵循 CC BY-NC-SA 4.0 的非商业与相同方式共享要求。[原型作者](https://space.bilibili.com/4456176) · [版本设计者](https://space.bilibili.com/4168597) · [设计说明](https://www.bilibili.com/opus/1247156596114456581) · [许可全文](licenses/CC-BY-NC-SA-4.0.txt)
 
-八张衣柜设定图由项目维护者提供，涵盖默认女仆装及七套换装。本项目依照设定补做了各款的立体裁片、镶边、着装镜像和动作。
+八张衣柜设定图由项目维护者提供，涵盖默认女仆装及七套换装。本项目依照设定补做了各款的立体裁片、镶边、着装镜像和动作。v1.0.1 根据蓝鲸女仆设定重绘了胸襟、围裙镶边与裙摆刺绣。[可编辑的矢量母版](assets/maid-dress-uv.svg)
+
+围裙中央使用 DeepSeek 官方发布的蓝色鲸鱼标志。该标志及其商标权归 DeepSeek 权利人所有，使用请参照单独的品牌规范。项目自己的角色、服装纹样与代码许可只涵盖各自对应的内容。[官方图标源文件](https://github.com/deepseek-ai/awesome-deepseek-integration/blob/172dc8b74a0d549f4bce9850f7fe6a25b37a5ac7/docs/_logo%20svg/ICON.svg) · [品牌素材使用规范](https://github.com/deepseek-ai/awesome-deepseek-integration/blob/main/docs/_logo%20svg/guidelines.md)
 
 动作与部分外观表面的采样参考 shenshen 桌宠 4.2.1，安装包登记的发布者为 merzlin。本地 4.2.1 的“待机呼吸休闲.webm”与上游同名文件的 Git blob 均为 fd64a428a2be1d3b4ff6cd7f9867dfe978ba0bbb。公开可核查的桌宠上游是 PC2005-cloud/dsh-pet。该项目区分程序代码与角色形象的授权。其程序的 MIT 版权声明为 Copyright (c) 2026 PC2005-cloud。[上游项目](https://github.com/PC2005-cloud/dsh-pet) · [MIT 原文](licenses/DSH-Pet-MIT.txt)
 

@@ -1,6 +1,6 @@
 # Deepseek（大肥鱼）Q版3D模型 · 资产图集
 
-这些画面取自 v1.0.0 的公开三维模型。点图可查看原尺寸。[模型下载](https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/releases/tag/v1.0.0) · [来源与许可](../THIRD_PARTY_NOTICES.md)
+这些画面取自 v1.0.1 的公开三维模型。点图可查看原尺寸。[模型下载](https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/releases/tag/v1.0.1) · [来源与许可](../THIRD_PARTY_NOTICES.md)
 
 ## 小屋与院子
 
@@ -55,5 +55,7 @@
 **蓝鲸女仆**
 
 [![设定图与三维近景对照，可见腕带上方的蓬袖和袖口蕾丝的侧面轮廓](maid-sleeves.webp)](maid-sleeves.webp)
+
+[![蓝鲸女仆装的胸襟、围裙 DeepSeek 鲸鱼标志与裙摆刺绣实模近景](maid-embroidery.webp)](maid-embroidery.webp)
 
 [查看走动与收步时袖口的摆动](maid-walk.webp)

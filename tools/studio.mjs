@@ -29,6 +29,8 @@ window.sceneFile=async part=>{
       const credits="https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/blob/v1.0.0/THIRD_PARTY_NOTICES.md";
       writer.json.asset.extras={sceneLicense:"AGPL-3.0",credits};
       if(part==="room"){
+        writer.json.asset.extras.credits="https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/blob/v1.0.1/THIRD_PARTY_NOTICES.md";
+        writer.json.asset.extras.apronMark="Mirror portrait includes the DeepSeek brand mark on the apron.";
         writer.json.asset.extras.mirrorPortrait="溟月原型：上善无形；女仆鲸鱼娘设计：ZipZipPipe。镜中角色三维演绎，CC BY-NC-SA 4.0。";
       }
     }}));

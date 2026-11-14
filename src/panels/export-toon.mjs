@@ -2,6 +2,7 @@
 import * as T from "three";
 import {GLTFExporter} from "three/addons/exporters/GLTFExporter.js";
 import {makeWhale} from "./whale-resident.mjs";
+import {DEFAULT_OUTFIT} from "./whale-wardrobe.mjs";
 
 export async function buildGLB({bodyOnly=false,outfit}={}){
   const rig=makeWhale(()=>{}, {fit:false,bodyOnly});await rig.ready;
@@ -90,6 +91,10 @@ export async function buildGLB({bodyOnly=false,outfit}={}){
       license:"https://creativecommons.org/licenses/by-nc-sa/4.0/",
       credits:"https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/blob/v1.0.0/THIRD_PARTY_NOTICES.md"
     };
+    if(!bodyOnly&&(!outfit||outfit===DEFAULT_OUTFIT)){
+      writer.json.asset.extras.credits="https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/blob/v1.0.1/THIRD_PARTY_NOTICES.md";
+      writer.json.asset.extras.apronMark="DeepSeek brand asset. https://github.com/deepseek-ai/awesome-deepseek-integration/blob/main/docs/_logo%20svg/guidelines.md";
+    }
     // Three chooses the first weighted bone as the skeleton root. A hip skin
     // also uses the torso, a sibling of the thigh. Export their common root.
     for(const mesh of writer.skins){

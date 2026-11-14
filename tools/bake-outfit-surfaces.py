@@ -20,12 +20,31 @@ PATTERNS = {
     "鲸鱼伞雨衣": (740, [(157,112,15),(175,112,21),(196,111,22),(217,111,34),(245,111,51),(259,111,55),(269,111,41)]),
 }
 
+def maid_embroidery():
+    """Rasterize the editable seam-registered artwork at its native resolution."""
+    from resvg_py import svg_to_bytes
+
+    source = ROOT / "assets/maid-dress-uv.svg"
+    png = svg_to_bytes(svg_path=str(source), skip_system_fonts=True)
+    with Image.open(io.BytesIO(png)) as image:
+        return image.convert("RGB")
+
+
 def bake():
     sources = {p.stem:p for p in (ROOT/"assets/衣柜参考图").rglob("*") if p.is_file()}
     output = {}
     w, h = 1024, 768
     a, v = np.meshgrid(((np.arange(w)+.5)/w-.5)*2*np.pi,(np.arange(h)+.5)/h)
     for name, (preview, rows) in PATTERNS.items():
+        if name == "蓝鲸女仆":
+            # At the costume sheet's original scale the small full-dress panel
+            # has only a few dozen samples across the bib. Rebuild the named
+            # embroidery and seams from their full-resolution UV artwork.
+            image = maid_embroidery()
+            buffer = io.BytesIO()
+            image.save(buffer, "WEBP", quality=97, method=6)
+            output[name] = "data:image/webp;base64," + base64.b64encode(buffer.getvalue()).decode()
+            continue
         art = Image.open(sources[name]).convert("RGB")
         scale = art.width / preview
         y, center, radius = [np.interp(v,[0,.14,.35,.55,.80,.92,1],c) for c in zip(*rows)]
@@ -40,27 +59,6 @@ def bake():
         face=sample(center+side*radius)
         back=sample(center+radius*(.79+.12*np.cos(14*a)))
         rgb=face*front[:,:,None]+back*(1-front[:,:,None])
-        if name=="蓝鲸女仆":
-            # The shoulder straps are stitched meshes. Keep the original bib
-            # and waistband, and restore navy dress fabric beneath both straps.
-            strip_rows=[0,.04,.08,.12,.16,.22,.28,.35]
-            left=np.interp(v,strip_rows,[.40,.405,.406,.419,.419,.409,.405,.40])
-            right=np.interp(v,strip_rows,[.626,.607,.579,.560,.548,.544,.544,.544])
-            u=a/(2*np.pi)+.5
-            mask=np.clip(np.maximum(left-u,u-right)*w,0,1)*np.clip((.351-v)*h,0,1)
-            weave=1+.044*np.cos(a*12)+.013*np.cos(a*64)
-            navy=np.array([47,45,70])[None,None,:]*weave[:,:,None]
-            rgb=rgb*(1-mask[:,:,None])+navy*mask[:,:,None]
-            hem=.903+.011*np.cos(24*a)
-            width=v-hem
-            shade=(.91+.09*np.cos(24*a))[:,:,None]
-            lace=np.array([246,232,220])[None,None,:]*shade
-            petal=np.cos(40*a+np.clip(width,0,.1)*35)
-            stitch=(np.abs(width-.043-.010*petal)<.0022)|(np.abs(width-.070-.013*petal)<.0022)
-            lace=np.where(stitch[:,:,None],np.array([201,175,165]),lace)
-            rgb=np.where((width>0)[:,:,None],lace,rgb)
-            thread=(np.abs(width+.014)<.0027)|(np.abs(width+.026+.004*np.cos(32*a))<.0018)
-            rgb=np.where(thread[:,:,None],np.array([217,187,131]),rgb)
         image=Image.fromarray(rgb.astype("uint8"))
         buffer=io.BytesIO()
         image.save(buffer,"WEBP",quality=92,method=5)

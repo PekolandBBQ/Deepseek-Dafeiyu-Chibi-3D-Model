@@ -101,7 +101,7 @@ export function fitWardrobe({model,body,head,knees,garment,lap,redraw}){
     for(const [key,attr] of Object.entries(base.attributes))g.setAttribute(key,attr);
     g.morphAttributes=base.morphAttributes;g.morphTargetsRelative=true;g.setIndex(idx);
     const mat=new T.MeshPhysicalMaterial({color:rain?0xc4d9ff:metallic?0x6970a0:0xffffff,
-      roughness:rain?.16:metallic?.46:.74,clearcoat:rain?.9:.12,sheen:rain?0:.55,
+      roughness:rain?.16:metallic?.46:.74,clearcoat:rain?.9:apron?0:.12,sheen:rain?0:.55,
       sheenColor:0xa3b6dd,metalness:metallic?.17:0,
       transparent:rain||metallic,opacity:rain?.27:metallic?.39:1,depthWrite:!rain&&!metallic,side:T.FrontSide});
     accent.set("panel",mat);
@@ -360,7 +360,9 @@ export function fitWardrobe({model,body,head,knees,garment,lap,redraw}){
     sleeve.color.setHex(d.cloth);cuff.color.setHex(d.trim);shoe.color.setHex(d.shoe);
     cloth.map=null;cloth.color.setHex(d.cloth);cloth.needsUpdate=true;
     cloth.roughness=d.type==="rain"?.32:d.type==="star"?.48:.78;
-    cloth.clearcoat=d.type==="rain"?.75:.05;
+    // Woven cotton keeps its broad sheen; a clear coat would draw sharp white
+    // reflections across the embroidered insignia as the skirt turns.
+    cloth.clearcoat=d.type==="rain"?.75:d.type==="maid"?0:.05;
     if(!textureCache.has(name)){
       const promise=loader.loadAsync(prints[name]).then(map=>{
         map.colorSpace=T.SRGBColorSpace;map.anisotropy=4;if(disposed)map.dispose();return map;

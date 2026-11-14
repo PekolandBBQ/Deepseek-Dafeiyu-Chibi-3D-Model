@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+     width="4096" height="3072" viewBox="0 0 1024 768">
+  <title>蓝鲸女仆 · 连衣裙与刺绣围裙的 UV 母版</title>
+  <desc>正中为前身，左右边缘为后中缝。围裙边界与独立镂空花边的缝线对应。</desc>
+  <defs>
+    <linearGradient id="silk" x2=".18" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#292c4c"/><stop offset=".32" stop-color="#252843"/>
+      <stop offset=".58" stop-color="#34375c"/><stop offset=".87" stop-color="#37395f"/>
+      <stop offset="1" stop-color="#262943"/>
+    </linearGradient>
+    <linearGradient id="ivory" x2=".65" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#fff6eb"/><stop offset=".28" stop-color="#f2e4df"/>
+      <stop offset=".57" stop-color="#fff4e9"/><stop offset=".86" stop-color="#edddd9"/>
+      <stop offset="1" stop-color="#e1cfc8"/>
+    </linearGradient>
+    <linearGradient id="ribbon" x1="0" y1="1" x2=".72" y2="0">
+      <stop stop-color="#242641"/><stop offset=".38" stop-color="#393956"/>
+      <stop offset=".59" stop-color="#515579"/><stop offset=".8" stop-color="#343852"/><stop offset="1" stop-color="#252a46"/>
+    </linearGradient>
+    <linearGradient id="gold" x2=".28" y2="1">
+      <stop stop-color="#b28965"/><stop offset=".27" stop-color="#edd4a2"/>
+      <stop offset=".50" stop-color="#f4dfb4"/><stop offset=".73" stop-color="#c99c70"/>
+      <stop offset="1" stop-color="#dcb98d"/>
+    </linearGradient>
+    <radialGradient id="button" cx=".31" cy=".22" r=".92">
+      <stop stop-color="#ffefc3"/><stop offset=".36" stop-color="#dbc69f"/>
+      <stop offset=".78" stop-color="#ac8c6d"/><stop offset="1" stop-color="#6b5c62"/>
+    </radialGradient>
+    <!-- Two widths of navy satin, aligned with the sixteen modeled pleats. -->
+    <linearGradient id="pleat" x2="1" y2=".04">
+      <stop stop-color="#14182c" stop-opacity=".28"/><stop offset=".22" stop-color="#161a32" stop-opacity=".05"/>
+      <stop offset=".56" stop-color="#9ca2c5" stop-opacity=".10"/><stop offset=".78" stop-color="#8690b6" stop-opacity=".03"/>
+      <stop offset="1" stop-color="#14182c" stop-opacity=".28"/>
+    </linearGradient>
+    <pattern id="pleats" width="64" height="768" patternUnits="userSpaceOnUse">
+      <rect width="64" height="768" fill="url(#pleat)"/>
+    </pattern>
+    <pattern id="cotton-ribs" width="32" height="90" patternUnits="userSpaceOnUse">
+      <rect width="32" height="90" fill="url(#ivory)"/>
+      <path d="M0 0 Q12 42 4 90 H0Z" fill="#bfadb5" opacity=".27"/>
+      <path d="M10 0 Q24 35 19 90" fill="none" stroke="#fffaf1" stroke-width="2" opacity=".54"/>
+    </pattern>
+    <path id="trim-line" d="M0 11 Q16 0 32 11 T64 11"/>
+    <path id="skirt-edge" d="M0 9 Q16 -3 32 9 T64 9 V90 H0Z"/>
+    <pattern id="petticoat" width="64" height="100" patternUnits="userSpaceOnUse" y="683">
+      <use xlink:href="#skirt-edge" fill="url(#cotton-ribs)"/>
+      <g fill="none" stroke-linecap="round">
+        <use xlink:href="#trim-line" stroke="#776573" stroke-width="3.1" transform="translate(0 -3)"/>
+        <use xlink:href="#trim-line" stroke="#ebc997" stroke-width="1.3" transform="translate(0 -4.5)"/>
+        <use xlink:href="#trim-line" stroke="#ad9996" stroke-width="1.8" transform="translate(0 43)"/>
+        <use xlink:href="#trim-line" stroke="#fff6e6" stroke-width=".85" transform="translate(0 42.3)"/>
+        <use xlink:href="#trim-line" stroke="#bc9f91" stroke-width="1.1" stroke-dasharray="1 3" transform="translate(0 47)"/>
+      </g>
+      <g fill="#c4b0ad" stroke="#eee3d9" stroke-width=".6">
+        <path d="M16 49q-4-7-1-9q3 3 1 9m2 0q0-6 4-7q1 4-4 7m-4 .2q-5-2-5-6q4 1 5 6Z"/>
+        <path d="M48 58q-4-7-1-9q3 3 1 9m2 0q0-6 4-7q1 4-4 7m-4 .2q-5-2-5-6q4 1 5 6Z"/>
+      </g>
+    </pattern>
+    <path id="shell" d="M0 6C-2 6-3 5-4 3C-8 1-11-3-10-6Q-9-8-7-7Q-7-11-4-10Q-3-14 0-12Q3-14 4-10Q7-12 8-8Q12-9 11-5C11-1 6 2 3 4Q2 6 0 6Z"/>
+    <g id="sea-shell" stroke-linecap="round">
+      <use xlink:href="#shell" fill="url(#gold)" stroke="#916e56" stroke-width=".8"/>
+      <path d="M0 4Q-6-2-7-7M0 4Q-3-4-3-10M0 4V-10M0 4Q4-4 4-9M0 4Q6-1 8-6" fill="none" stroke="#aa815f" stroke-width=".8"/>
+      <path d="M-2 5.4Q0 6.5 2.5 5" fill="none" stroke="#fbe4bb" stroke-width="1"/>
+    </g>
+    <path id="spark" d="M0-5Q1-1 3 .1Q.9 1 0 5Q-.9 1-3 0Q-1-1 0-5Z"/>
+    <g id="vine" fill="none" stroke="url(#gold)" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M0 23C13 22 15 7 32 9S52 25 64 21S85 8 95 11S114 26 128 23" stroke-width="1.45"/>
+      <path d="M16 15Q13 11 11 11Q10 7 12 6Q17 7 16 15ZM27 9Q26 4 29 2Q32 3 32 5Q32 8 27 9ZM39 11Q42 5 46 5Q46 10 39 11ZM77 16Q76 10 72 9Q70 13 77 16ZM99 12Q100 6 104 5Q107 9 99 12ZM115 20Q121 15 123 16Q124 19 115 20Z" stroke-width=".9"/>
+      <path d="M49 18Q41 21 45 24Q48 25 51 21M87 12Q86 7 89 5" stroke-width=".9"/>
+    </g>
+    <pattern id="sea-border" width="128" height="49" patternUnits="userSpaceOnUse" y="643">
+      <use xlink:href="#vine"/>
+      <use xlink:href="#sea-shell" transform="translate(64 17) scale(.79 1)"/>
+      <g fill="#e4c598"><use xlink:href="#spark" transform="translate(4 9)"/><use xlink:href="#spark" transform="translate(101 25) scale(.67)"/>
+        <circle cx="8" cy="5.3" r=".85"/><circle cx="37" cy="17" r="1.3"/><circle cx="80" cy="4.4" r=".95"/><circle cx="109" cy="14" r=".8"/></g>
+      <path d="M0 32 Q32 24 64 32 T128 32" fill="none" stroke="url(#gold)" stroke-width="1.5"/>
+      <path d="M0 35 Q32 27 64 35 T128 35" fill="none" stroke="#918075" stroke-width=".75" stroke-dasharray="1.2 2.1"/>
+    </pattern>
+    <path id="shirt" d="M352-4Q389 57 415 111Q431 167 434 191H590Q592 169 610 111Q638 48 670-4Z"/>
+    <clipPath id="shirt-clip"><use xlink:href="#shirt"/></clipPath>
+    <path id="apron" d="M381 292L608 292Q622 303 627 323Q627 347 624 369Q617 395 608 415Q604 430 598 445Q591 464 582 476Q577 502 577 507Q571 520 563 530Q557 545 548 553Q541 567 531 576Q518 589 509 594Q504 599 501 601Q494 597 491 594Q475 584 465 576Q454 566 445 553Q432 537 429 530Q422 518 421 507Q407 490 399 476Q389 458 384 445Q380 429 381 415Q365 391 358 369Q354 345 360 323Q365 307 381 292Z"/>
+    <clipPath id="apron-clip"><use xlink:href="#apron"/></clipPath>
+    <g id="pearl">
+      <ellipse cy="1.4" rx="3.7" ry="4.65" fill="#1c2034"/>
+      <ellipse rx="3.35" ry="4.1" fill="url(#button)" stroke="#887267" stroke-width=".7"/>
+      <ellipse cx="-.8" cy="-.9" rx="1.2" ry="1.45" fill="#fff1d8"/>
+    </g>
+    <g id="bow-wing" stroke-linejoin="round">
+      <path d="M0 0Q-29-29-57-35Q-71-35-69-16Q-74 1-69 13Q-73 35-61 35Q-30 33-3 12Z" fill="url(#ribbon)" stroke="#25253e" stroke-width="2"/>
+      <path d="M-5 4Q-26-9-57-15M-7 9Q-33 9-58 20" fill="none" stroke="#22243f" stroke-width="2"/>
+      <path d="M-10 2Q-40-17-58-17M-14 13Q-35 14-54 23" fill="none" stroke="#7882a4" stroke-width="1.05" opacity=".65"/>
+    </g>
+    <!-- DeepSeek official ICON.svg, blob 2e4650aee9fd05f4681c426cdb74ee2aeff1fb07.
+         Keep the published path, internal cutouts and #4d6bfe brand color. -->
+    <path id="deepseek-icon" fill="#4d6bfe" transform="translate(-452.83 -271.91)" d="M523.77,276.34c-.76-.38-1.08.33-1.53.69a4,4,0,0,0-.41.41,5.07,5.07,0,0,1-4.1,1.87,8,8,0,0,0-6.46,2.53,5.82,5.82,0,0,0-3.72-4.62,6.39,6.39,0,0,1-2.85-1.94,7.76,7.76,0,0,1-.92-2.31c-.16-.48-.32-1-.87-1.05s-.83.41-1.07.82a11,11,0,0,0-1.26,5.5,11.9,11.9,0,0,0,5.49,10.14.75.75,0,0,1,.39,1c-.25.84-.54,1.65-.79,2.49-.17.53-.41.65-1,.42a16.63,16.63,0,0,1-5.18-3.52c-2.56-2.48-4.88-5.21-7.76-7.35-.68-.5-1.36-1-2.06-1.41-2.94-2.86.39-5.2,1.16-5.48s.28-1.29-2.33-1.28-5,.88-8,2a8.23,8.23,0,0,1-1.39.41,28.67,28.67,0,0,0-8.61-.3,18.57,18.57,0,0,0-13.44,7.83c-4,5.47-4.91,11.67-3.76,18.15a27.68,27.68,0,0,0,10,16.88,26.8,26.8,0,0,0,19.23,6.39c4.43-.25,9.36-.84,14.92-5.55a13.84,13.84,0,0,0,5.32,1.18,17.24,17.24,0,0,0,5.09-.38c2.2-.46,2.05-2.5,1.25-2.87-6.43-3-5-1.78-6.3-2.77,3.27-3.87,8.2-7.89,10.13-20.92a12.44,12.44,0,0,0,0-2.52c0-.51.1-.71.68-.76a12.55,12.55,0,0,0,4.62-1.42c4.17-2.28,5.85-6,6.25-10.51A1.57,1.57,0,0,0,523.77,276.34Zm-36.34,40.37c-6.24-4.9-9.27-6.52-10.52-6.45s-1,1.41-.7,2.28a8.49,8.49,0,0,0,1.11,2.21,1.14,1.14,0,0,1-.34,1.8c-2,1.24-5.5-.42-5.66-.5a26.08,26.08,0,0,1-9.87-9.88,30.15,30.15,0,0,1-3.87-13.39c-.06-1.15.28-1.56,1.42-1.77a14.31,14.31,0,0,1,4.57-.11,28.56,28.56,0,0,1,16.33,8.29,54.06,54.06,0,0,1,6.58,8.63,41.46,41.46,0,0,0,7.41,8.71,24.36,24.36,0,0,0,2.66,2C494.16,318.82,490.16,318.87,487.43,316.71Zm3-19.23a.92.92,0,0,1,.92-.92.83.83,0,0,1,.32.06.8.8,0,0,1,.34.22.9.9,0,0,1,.25.64.92.92,0,0,1-1.83,0Zm9.29,4.76a5.27,5.27,0,0,1-1.77.48,3.75,3.75,0,0,1-2.38-.76,3.57,3.57,0,0,1-1.65-2.26,5.16,5.16,0,0,1,0-1.76,2,2,0,0,0-.71-2.17,3.1,3.1,0,0,0-2.06-.59,1.63,1.63,0,0,1-.76-.24.75.75,0,0,1-.34-1.07,3.47,3.47,0,0,1,.57-.62,3.9,3.9,0,0,1,3.43,0,10,10,0,0,1,3,2.34,18.62,18.62,0,0,1,2,2.73,10.9,10.9,0,0,1,1.33,2.53C500.65,301.47,500.4,302,499.71,302.24Z"/>
+  </defs>
+  <rect width="1024" height="768" fill="url(#silk)"/>
+  <rect width="1024" height="768" fill="url(#pleats)"/>
+  <!-- Navy dress, embroidered shell/seaweed border and two rows of hem stitching. -->
+  <rect y="643" width="1024" height="47" fill="url(#sea-border)"/>
+  <rect y="683" width="1024" height="85" fill="url(#petticoat)"/>
+  <g stroke="#caa87c" stroke-width="1" fill="none">
+    <path d="M0 639 Q16 634 32 639 T64 639 T96 639 T128 639 T160 639 T192 639 T224 639 T256 639 T288 639 T320 639 T352 639 T384 639 T416 639 T448 639 T480 639 T512 639 T544 639 T576 639 T608 639 T640 639 T672 639 T704 639 T736 639 T768 639 T800 639 T832 639 T864 639 T896 639 T928 639 T960 639 T992 639 T1024 639" stroke-dasharray="1.3 3.3" opacity=".73"/>
+  </g>
+  <!-- Bodice under the two separate shoulder tapes. Real pearl brooch sits
+       on the knot at v = .106; the tails and shirt are sewn behind it. -->
+  <use xlink:href="#shirt" fill="url(#ivory)"/>
+  <g clip-path="url(#shirt-clip)" fill="none" stroke-linecap="round">
+    <path d="M432 -5Q450 68 464 171M452 -5Q469 87 477 176M486 0L490 176M574 -5Q555 91 546 177M595 -5Q572 87 557 176" stroke="#cfbfc1" stroke-width="2.8"/>
+    <path d="M435 -5Q453 68 467 171M455 -5Q472 87 480 176M489 0L493 176M577 -5Q558 91 549 177M598 -5Q575 87 560 176" stroke="#fffaf0" stroke-width="1.75"/>
+    <path d="M502 -5Q501 63 504 175M520 -5Q523 75 519 175" stroke="#b9a8af" stroke-width="1.1"/>
+  </g>
+  <path d="M422 164Q512 177 602 164L594 273H431Z" fill="#313451"/>
+  <path d="M423 166Q512 179 601 166M433 259Q511 267 592 259" fill="none" stroke="#6d6680" stroke-width="1.3"/>
+  <path d="M435 171Q513 182 590 170" stroke="#baa58e" stroke-width=".9" stroke-dasharray="1.2 2.7" fill="none"/>
+  <g><use xlink:href="#pearl" x="476" y="191"/><use xlink:href="#pearl" x="544" y="191"/><use xlink:href="#pearl" x="476" y="230"/><use xlink:href="#pearl" x="544" y="230"/><use xlink:href="#pearl" x="511" y="147"/></g>
+  <g transform="translate(512 73)">
+    <path d="M-6 4Q-24 23-44 53L-31 50L-24 62Q-9 37 1 11M5 4Q25 26 45 42L33 46L29 58Q12 37-1 11" fill="url(#ribbon)" stroke="#292b47" stroke-width="1.6"/>
+    <use xlink:href="#bow-wing"/><use xlink:href="#bow-wing" transform="scale(-1 1)"/>
+    <path d="M-8 -6Q1-9 8-5L6 13Q0 16-6 13Z" fill="#494a6b"/>
+  </g>
+  <!-- The registered apron tapers in UV as the skirt widens in object space. -->
+  <use xlink:href="#apron" fill="url(#ivory)" stroke="#cfbab5" stroke-width="2.2"/>
+  <g clip-path="url(#apron-clip)">
+    <g fill="none" stroke-linecap="round">
+      <path d="M387 291Q391 316 414 346Q426 363 427 377M402 290Q410 319 436 338M592 290Q582 316 560 340M612 295Q604 333 584 361" stroke="#c6b3b6" stroke-width="3" opacity=".62"/>
+      <path d="M391 291Q395 315 417 343M406 290Q415 321 435 334M597 292Q588 316 566 336M615 301Q609 330 590 356" stroke="#fffaf1" stroke-width="3.2"/>
+      <use xlink:href="#apron" transform="translate(500 410) scale(.93 .94) translate(-500 -410)" stroke="#ccada4" stroke-width="1.5"/>
+      <use xlink:href="#apron" transform="translate(500 410) scale(.916 .93) translate(-500 -410)" stroke="#fff9ef" stroke-width="2"/>
+      <use xlink:href="#apron" transform="translate(500 410) scale(.90 .913) translate(-500 -410)" stroke="#c4ac9b" stroke-width="1.25" stroke-dasharray="1.7 3.8"/>
+    </g>
+    <!-- Compensate for the skirt's circumferential UV scale, so that a
+         front view of the applied stitch retains the icon's proportions. -->
+    <use xlink:href="#deepseek-icon" transform="translate(453 402) scale(1.65 2.71)"/>
+  </g>
+  <!-- A continuous ivory waistband crosses the bodice-to-skirt join. -->
+  <path d="M0 264Q128 267 256 264T512 264T768 264T1024 264V290Q896 293 768 290T512 290T256 290T0 290Z" fill="url(#ivory)" stroke="#b8a6ab" stroke-width="1.45"/>
+  <path d="M0 268Q128 271 256 268T512 268T768 268T1024 268M0 286Q128 289 256 286T512 286T768 286T1024 286" fill="none" stroke="#fffbf2" stroke-width="1.2"/>
+  <path d="M0 287.5Q128 290.5 256 287.5T512 287.5T768 287.5T1024 287.5" fill="none" stroke="#b7a5a1" stroke-width=".7" stroke-dasharray="1.1 2.4"/>
+</svg>

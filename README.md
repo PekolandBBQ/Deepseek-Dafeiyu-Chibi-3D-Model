@@ -1,10 +1,10 @@
 # Deepseek（大肥鱼）Q版3D模型
 
-本项目提供 Deepseek（大肥鱼）的 Q 版三维角色、独立素体和八套穿搭，支持换装与布料动画。可以在浏览器中走近她的书桌、衣柜和庭院，也可以下载带骨架的 GLB 或用 Three.js 源码继续制作。独立预览使用本地生成的示范动作和猫狗路径。屏幕上的动作记录只在本次预览中存在。
+这是一套社区制作的 Deepseek（大肥鱼）Q 版三维角色资产，包含独立素体、八套穿搭和布料动画。可以在浏览器中走近她的书桌、衣柜和庭院，也可以下载带骨架的 GLB 或用 Three.js 源码继续制作。独立预览使用本地生成的示范动作和猫狗路径。屏幕上的动作记录只在本次预览中存在。
 
 ## 资产图集
 
-[360° 全景](#360-全景) · [小屋室内](#小屋室内) · [篱下小院](#篱下小院) · [大肥鱼的衣柜](#大肥鱼的衣柜) · [模型下载](https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/releases/tag/v1.0.0)
+[360° 全景](#360-全景) · [小屋室内](#小屋室内) · [篱下小院](#篱下小院) · [大肥鱼的衣柜](#大肥鱼的衣柜) · [模型下载](https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/releases/tag/v1.0.1)
 
 [![黄昏时的全景，篱灯沿院墙亮起，石径从篱门通往小屋](previews/panoramas/cottage-at-dusk.webp)](previews/panoramas/cottage-at-dusk.webp)
 
@@ -56,7 +56,11 @@
 
 **蓝鲸女仆**
 
+胸襟、围裙上的 DeepSeek 鲸鱼标志和裙摆贝壳金绣共用一张 4096 × 3072 贴图，可从[矢量纹样母版](assets/maid-dress-uv.svg)重新烘焙。围裙边缘和袖口的蕾丝仍由独立网格随动作摆动。
+
 [![设定图与三维近景对照，可见腕带上方的蓬袖和袖口蕾丝的侧面轮廓](previews/maid-sleeves.webp)](previews/maid-sleeves.webp)
+
+[![蓝鲸女仆装的胸襟、围裙 DeepSeek 鲸鱼标志与裙摆刺绣实模近景](previews/maid-embroidery.webp)](previews/maid-embroidery.webp)
 
 **走动与收步**
 
@@ -78,7 +82,7 @@ npm run preview
 - [大肥鱼与默认女仆装](assets/大肥鱼.glb) 和 [无服饰基础身体](assets/大肥鱼-基础身体.glb) 各含 16 段动画。身体、手臂、头发、眼睛和尾巴属于角色。衣料、穿搭配饰和蕾丝单独绑定。
 - [小屋室内](assets/小屋室内.glb) 包含家具、默认装束的穿衣镜和灯光，从书桌、衣柜到床铺可按节点选择。室内体素使用 glTF 的 `EXT_mesh_gpu_instancing`，导入器需要支持该扩展。
 - [篱下小院](assets/篱下小院.glb) 包含池塘和三条金鱼、猫狗、花架、枫树、秋千、餐桌与壁炉。室内和庭院 GLB 保存的是场景快照。动物路线、日照和家具交互由网页源码驱动。
-- 两个场景和九个独立角色文件可在 [v1.0.0 发布页](https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/releases/tag/v1.0.0) 获取，也可用下方命令生成。
+- 两个场景和九个独立角色文件可在 [v1.0.1 发布页](https://github.com/PekolandBBQ/Deepseek-Dafeiyu-Chibi-3D-Model/releases/tag/v1.0.1) 获取，也可用下方命令生成。
 
 ## 重新构建
 
@@ -93,6 +97,8 @@ npm run export -- mirror
 ```
 
 `build` 将静态网页写入 `dist/`。`test` 启动本地服务器和 Chromium，打开实际房间、换装、穿衣镜和庭院，并渲染全部八套穿搭。`export` 使用同一套 Three.js 源码和已安装的 Chromium。已有 Google Chrome 时，也可设置环境变量 `PLAYWRIGHT_CHANNEL=chrome`。浏览器需支持 WebGL 2。
+
+重拍女仆装设定与实模对照、刺绣近景和走动动画时，先执行 `python -m pip install pillow playwright` 和 `python -m playwright install chromium`，再运行 `python tools/capture-maid.py`。用 `--font` 指定本机中文字体文件。
 
 安装上述依赖和 Chromium 后，运行 `node tools/check-rig.mjs` 可用实际角色检查蕾丝在不同帧率下的回弹、瞬移复位，以及换装时身体与饰边的分离。
 
@@ -110,7 +116,7 @@ npm run export -- mirror
 从原始输入重做贴图与动作时，可以按下列顺序执行。将视频目录、FFmpeg 和动图的示例路径替换为本机路径。
 
 ```sh
-python -m pip install pillow numpy opencv-python
+python -m pip install pillow numpy opencv-python resvg-py==0.5.0
 python tools/bake-dsh-surfaces.py /path/to/videos /path/to/ffmpeg /path/to/turnaround.gif assets/whale-toon-face.json
 python tools/bake-dsh-motion.py /path/to/videos /path/to/ffmpeg assets/dsh-motion.json
 python tools/bake-outfit-surfaces.py
