@@ -2,9 +2,15 @@
 
 可以在浏览器中走近大肥鱼的书桌、衣柜、床边和院子，切换八套衣服，查看穿衣镜，或单独导出带骨架的角色。独立预览使用本地生成的示范动作和猫狗路径。屏幕上的动作记录只在本次预览中存在。
 
-![蓝鲸女仆装的蓬袖、袖口与肩带](previews/maid-sleeves.webp)
+## 资产图集
 
-[查看女仆装走动时的花边](previews/maid-walk.webp)
+[![黄昏时的小屋与篱下小院全景，左侧是小屋，右侧石径通往鱼池和枫树](previews/panoramas/cottage-at-dusk.webp)](previews/panoramas/cottage-at-dusk.webp)
+
+| 小屋室内 | 篱下小院 |
+| --- | --- |
+| [![室内剖面全景，可见书桌、衣柜、床和阅读角](previews/interior/room-overview.webp)](previews/README.md#小屋室内) | [![庭院俯视，枫树、鱼池和小径都在篱笆内](previews/yard/overview.webp)](previews/README.md#篱下小院) |
+
+[浏览完整图集](previews/README.md) · [屋内与院中 360° 全景](previews/README.md#360-全景) · [八套穿搭与布料特写](previews/README.md#大肥鱼的衣柜)
 
 ## 本地预览
 
